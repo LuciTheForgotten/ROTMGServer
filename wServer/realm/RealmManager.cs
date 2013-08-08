@@ -92,6 +92,17 @@ namespace wServer.realm
         public static bool TryConnect(ClientProcessor psr)
         {
             var acc = psr.Account;
+            if (psr.ConnectedBuild != psr.clientVer)
+            {
+                psr.SendPacket(new svrPackets.TextPacket()
+                {
+                    Name = "",
+                    BubbleTime = 0,
+                    Stars = -1,
+                    Text = "You are running an outdated client version."
+                });
+                return false;
+            }
             if (acc.Banned)
                 return false;
             if (Clients.Count >= MAX_CLIENT)

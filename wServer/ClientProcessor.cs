@@ -29,6 +29,8 @@ namespace wServer
         public RC4 ReceiveKey { get; private set; }
         public RC4 SendKey { get; private set; }
 
+        public string clientVer = "0.5.2"; //Might want this
+
         public RealmManager Manager { get; private set; }
         public Socket Socket { get { return skt; } }
 
@@ -251,6 +253,7 @@ namespace wServer
                 }
             }
             Console.WriteLine("Client trying to connect!");
+            ConnectedBuild = pkt.BuildVersion;
             if (!RealmManager.TryConnect(this))
             {
                 if (CheckAccountInUse(account.AccountId) != false)
@@ -312,8 +315,6 @@ namespace wServer
                     ExtraXML = world.ExtraXML
                 });
                 stage = ProtocalStage.Handshaked;
-
-                ConnectedBuild = pkt.BuildVersion;
             }
         }
 
