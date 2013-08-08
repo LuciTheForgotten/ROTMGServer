@@ -36,6 +36,10 @@ namespace server.@char
                         filteredServers = GetServersForRank(a.Rank);
                     }
                 }
+                else
+                {
+                    filteredServers = GetServersForRank(0);
+                }
 
                 Chars chrs = new Chars()
                 {
