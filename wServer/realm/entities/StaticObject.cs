@@ -10,7 +10,7 @@ namespace wServer.realm.entities
     public class StaticObject : Entity
     {
         //Stats
-        public bool Vulnerable { get; private set; }
+        public bool Vulnerable { get; set; }
         public bool Static { get; private set; }
         public bool Hittestable { get; private set; }
         public int HP { get; set; }
@@ -57,7 +57,7 @@ namespace wServer.realm.entities
             base.ImportStats(stats, val);
         }
 
-        protected bool CheckHP()
+        public bool CheckHP()
         {
             try
             {

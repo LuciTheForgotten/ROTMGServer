@@ -141,12 +141,6 @@ namespace wServer.realm
             }
             else
             {
-                if (GuildHalls[g].Players.Count == 0)
-                {
-                    GuildHalls.Remove(g);
-                    GuildHall gh = (GuildHall)AddWorld(new GuildHall(g));
-                    GuildHalls.Add(g, gh);
-                }
                 return GuildHalls[g];
             }
         }

@@ -41,6 +41,7 @@ namespace wServer.realm
             Map = new Wmap();
             AllowTeleport = true;
             ShowDisplays = true;
+            Mining = false;
 
             ExtraXML = new string[] { XmlDatas.ItemXml, XmlDatas.AdditionXml, XmlDatas.RemoteXml };
         }
@@ -95,13 +96,15 @@ namespace wServer.realm
 
         public string ExtraVar = "Default";
 
-        public Wmap Map { get; private set; }
+        public Wmap Map { get; set; }
 
         private int entityInc = 0;
         public int GetNextEntityId()
         {
             return Interlocked.Increment(ref entityInc);
         }
+
+        public bool Mining { get; protected set; }
 
         public bool Delete()
         {

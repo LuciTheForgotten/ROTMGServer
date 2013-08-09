@@ -117,6 +117,7 @@
     <Compile Include="realm\entities\player\extras\Prices.cs" />
     <Compile Include="realm\entities\player\Player.Guilds.cs" />
     <Compile Include="realm\entities\player\Player.Networking.cs" />
+    <Compile Include="realm\GenLogic.cs" />
     <Compile Include="realm\setpieces\LordOfTheLostLands.cs" />
     <Compile Include="realm\setpieces\Unknown.cs" />
     <Compile Include="realm\terrain\Tile.cs" />
