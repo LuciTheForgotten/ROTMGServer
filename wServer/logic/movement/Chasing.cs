@@ -122,6 +122,11 @@ namespace wServer.logic.movement
             {
                 if (Host.Self.PlayerOwner.Owner != null)
                 {
+                    var distance = Vector2.Distance(new Vector2(Host.Self.X, Host.Self.Y), new Vector2(Host.Self.PlayerOwner.X, Host.Self.PlayerOwner.Y));
+                    if (distance > 12)
+                    {
+                        Host.Self.Move(Host.Self.PlayerOwner.X, Host.Self.PlayerOwner.Y);
+                    }
                     return true;
                 }
             }
