@@ -29,6 +29,8 @@ namespace wServer.realm.entities
         //Stats
         public int AccountId { get; private set; }
 
+        public Entity Pet { get; set; }
+
         public int Experience { get; set; }
         public int ExperienceGoal { get; set; }
         public int Level { get; set; }
@@ -188,6 +190,7 @@ namespace wServer.realm.entities
             chr.Level = Level;
             chr.Tex1 = Texture1;
             chr.Tex2 = Texture2;
+            chr.Pet = (Pet != null ? Pet.ObjectType : -1);
             chr.CurrentFame = Fame;
             chr.HitPoints = HP;
             chr.MagicPoints = MP;
@@ -312,6 +315,8 @@ namespace wServer.realm.entities
                 psr.Character.MpRegen,
                 psr.Character.Dexterity,
             };
+
+            Pet = null;
         }
 
         byte[,] tiles;
@@ -335,6 +340,8 @@ namespace wServer.realm.entities
                 base.Init(owner);
             else
                 psr.Disconnect();
+            if(psr.Character.Pet >= 0)
+                GivePet((short)psr.Character.Pet);
         }
 
         public override void Tick(RealmTime time)
@@ -860,6 +867,18 @@ namespace wServer.realm.entities
             obj.Move(X, Y);
             obj.Name = this.Name;
             Owner.EnterWorld(obj);
+        }
+
+        public void GivePet(short petId)
+        {
+            if (Pet != null)
+            {
+                Owner.LeaveWorld(Pet);
+            }
+            Pet = Entity.Resolve(petId);
+            Pet.PlayerOwner = this;
+            Pet.Move(X, Y);
+            Owner.EnterWorld(Pet);
         }
 
         public void Death(string killer)

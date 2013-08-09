@@ -18,6 +18,7 @@ namespace wServer.realm
 
         bool interactive;
         public bool BagDropped;
+        public Player PlayerOwner;
         public RealmManager Manager { get; private set; }
         protected Entity(short objType, bool interactive)
         {

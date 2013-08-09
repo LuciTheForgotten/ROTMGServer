@@ -12,10 +12,13 @@ namespace db
         MySqlConnection con;
         public Database()
         {
-            //con = new MySqlConnection("Server=54.244.123.82;Database=rotmg;uid=rotmg;password=HRdrv347"); //PREVIOUS PASSWORD
-            //con = new MySqlConnection("Server=54.244.123.82;Database=rotmg;uid=rotmg;password=!ka/40a."); //Used for pushing build
-            con = new MySqlConnection("Server=127.0.0.1;Database=rotmg;uid=root;password="); //Used for testing vps
-            //con = new MySqlConnection("Server=127.0.0.1;database=rotmg;uid=root;password="); //Private testing
+            ////////////////
+            //    NOTE    //
+            ////////////////
+            // You might be using a database from source released by botmaker.
+            // (In fact, you probably are.)
+            // If so, replace the "password=" with "password=botmaker", unless you chose a different DB password.
+            con = new MySqlConnection("Server=127.0.0.1;Database=rotmg;uid=root;password=");
             con.Open();
         }
 

@@ -62,6 +62,15 @@ namespace wServer.logic
                 Behaviors.Add(objType, b);
                 return this;
             }
+            public _ InitMany(short objTypeMin, short objTypeMax, BehaviorDef b)
+            {
+                int count = objTypeMax - objTypeMin;
+                for (int i = 0; i <= count; i++)
+                {
+                    Behaviors.Add((short)(objTypeMin + i), b);
+                }
+                return this;
+            }
         }
 
         static _ Behav()

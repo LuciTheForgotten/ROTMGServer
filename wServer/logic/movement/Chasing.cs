@@ -59,4 +59,88 @@ namespace wServer.logic.movement
             else return false;
         }
     }
+
+    class PetChasing : Behavior
+    {
+        float speed;
+        float radius;
+        float targetRadius;
+        private PetChasing(float speed, float radius, float targetRadius)
+        {
+            this.speed = speed;
+            this.radius = radius;
+            this.targetRadius = targetRadius;
+        }
+        static readonly Dictionary<Tuple<float, float, float>, PetChasing> instances = new Dictionary<Tuple<float, float, float>, PetChasing>();
+        public static PetChasing Instance(float speed, float radius, float targetRadius)
+        {
+            var key = new Tuple<float, float, float>(speed, radius, targetRadius);
+            PetChasing ret;
+            if (!instances.TryGetValue(key, out ret))
+                ret = instances[key] = new PetChasing(speed, radius, targetRadius);
+            return ret;
+        }
+
+        Random rand = new Random();
+        protected override bool TickCore(RealmTime time)
+        {
+            if (Host.Self.HasConditionEffect(ConditionEffects.Paralyzed)) return true;
+            var speed = this.speed * GetSpeedMultiplier(Host.Self);
+
+            float dist = radius;
+            Entity entity = Host.Self.PlayerOwner;
+            if (entity != null && dist > targetRadius)
+            {
+                var tx = entity.X + rand.Next(-2, 2) / 2f;
+                var ty = entity.Y + rand.Next(-2, 2) / 2f;
+                if (tx != Host.Self.X || ty != Host.Self.Y)
+                {
+                    var x = Host.Self.X;
+                    var y = Host.Self.Y;
+                    Vector2 vect = new Vector2(tx, ty) - new Vector2(Host.Self.X, Host.Self.Y);
+                    vect.Normalize();
+                    vect *= (speed / 1.5f) * (time.thisTickTimes / 1000f);
+                    ValidateAndMove(Host.Self.X + vect.X, Host.Self.Y + vect.Y);
+                    Host.Self.UpdateCount++;
+                }
+                return true;
+            }
+            else return false;
+        }
+    }
+
+    class PetBehaves : Behavior
+    {
+        public PetBehaves()
+        {
+        }
+
+        Random rand = new Random();
+        protected override bool TickCore(RealmTime time)
+        {
+            if (Host.Self.PlayerOwner != null)
+            {
+                if (Host.Self.PlayerOwner.Owner != null)
+                {
+                    return true;
+                }
+            }
+            var enemy = Host as Enemy;
+            enemy.DamageCounter.Death();
+            foreach (var i in enemy.CondBehaviors)
+                if ((i.Condition & BehaviorCondition.OnDeath) != 0)
+                    i.Behave(BehaviorCondition.OnDeath, Host, null, enemy.DamageCounter);
+            try
+            {
+                enemy.Owner.LeaveWorld(enemy);
+            }
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.Out.WriteLine("Crash halted! - Nonexistent entity tried to die!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            return false;
+        }
+    }
 }

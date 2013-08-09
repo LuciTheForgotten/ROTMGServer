@@ -95,6 +95,7 @@
     <Compile Include="logic\db\BehaviorDb.Manor.cs" />
     <Compile Include="logic\db\BehaviorDb.Unknown.cs" />
     <Compile Include="logic\db\BehaviorDb.Zombies.cs" />
+    <Compile Include="logic\db\BehaviorDb.Pets.cs" />
     <Compile Include="realm\ChatManager.cs" />
     <Compile Include="ClientProcessor.cs" />
     <Compile Include="cliPackets\ClientPacket.cs" />
