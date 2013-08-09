@@ -39,6 +39,8 @@ CREATE TABLE `accounts` (
   `regTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `guest` tinyint(1) NOT NULL DEFAULT '0',
   `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `locked` varchar(512) NOT NULL,
+  `ignored` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

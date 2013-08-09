@@ -26,6 +26,17 @@ public static class Utils
         return ret.ToString();
     }
 
+    public static List<int> StringListToIntList(List<string> strList)
+    {
+        List<int> ret = new List<int>();
+        foreach (var i in strList)
+        {
+            try { ret.Add(Convert.ToInt32(i)); }
+            catch { }
+        }
+        return ret;
+    }
+
     public static int[] FromCommaSepString32(string x)
     {
         return x.Split(',').Select(_ => FromString(_.Trim())).ToArray();

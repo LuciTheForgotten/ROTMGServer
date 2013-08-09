@@ -294,8 +294,8 @@ namespace wServer.realm.entities
             combs = new Combinations();
             price = new Prices();
 
-            Locked = new List<int>();
-            Ignored = new List<int>();
+            Locked = psr.Account.Locked != null ? psr.Account.Locked : new List<int>();
+            Ignored = psr.Account.Ignored != null ? psr.Account.Ignored : new List<int>();
             using (Database dbx = new Database())
             {
                 Locked = dbx.getLockeds(this.AccountId);
@@ -342,6 +342,10 @@ namespace wServer.realm.entities
                 psr.Disconnect();
             if(psr.Character.Pet >= 0)
                 GivePet((short)psr.Character.Pet);
+            try { SendAccountList(Locked, LOCKED_LIST_ID); }
+            catch { }
+            try { SendAccountList(Ignored, IGNORED_LIST_ID); }
+            catch { }
         }
 
         public override void Tick(RealmTime time)

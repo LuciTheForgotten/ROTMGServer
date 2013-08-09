@@ -125,7 +125,7 @@ AND characters.charId=death.chrId;";
         public Account Verify(string uuid, string password)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned FROM accounts WHERE uuid=@uuid AND password=SHA1(@password);";
+            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE uuid=@uuid AND password=SHA1(@password);";
             cmd.Parameters.AddWithValue("@uuid", uuid);
             cmd.Parameters.AddWithValue("@password", password);
             Account ret;
@@ -147,11 +147,11 @@ AND characters.charId=death.chrId;";
                         Id = rdr.GetInt32("guild"),
                         Rank = rdr.GetInt32("guildRank")
                     },
-                    Locked = getLockeds(rdr.GetInt32("id")),
-                    Ignored = getIgnoreds(rdr.GetInt32("id")),
                     NameChosen = rdr.GetBoolean("namechosen"),
                     NextCharSlotPrice = 0,
-                    VerifiedEmail = true//rdr.GetBoolean("verified")
+                    VerifiedEmail = true,//rdr.GetBoolean("verified")
+                    Locked = Utils.StringListToIntList(rdr.GetString("locked").Split(',').ToList()),
+                    Ignored = Utils.StringListToIntList(rdr.GetString("ignored").Split(',').ToList()),
                 };
             }
             ReadStats(ret);
@@ -166,12 +166,13 @@ AND characters.charId=death.chrId;";
             if ((int)(long)cmd.ExecuteScalar() > 0) return null;
 
             cmd = CreateQuery();
-            cmd.CommandText = "INSERT INTO accounts(uuid, password, name, rank, namechosen, verified, guild, guildRank, vaultCount, maxCharSlot, regTime, guest, banned) VALUES(@uuid, SHA1(@password), @name, 0, 1, 0, 0, 0, 1, 1, @regTime, @guest, 0);";
+            cmd.CommandText = "INSERT INTO accounts(uuid, password, name, rank, namechosen, verified, guild, guildRank, vaultCount, maxCharSlot, regTime, guest, banned, locked, ignored) VALUES(@uuid, SHA1(@password), @name, 0, 1, 0, 0, 0, 1, 1, @regTime, @guest, 0, @empty, @empty);";
             cmd.Parameters.AddWithValue("@uuid", uuid);
             cmd.Parameters.AddWithValue("@password", password);
             cmd.Parameters.AddWithValue("@name", uuid);//names[(uint)uuid.GetHashCode() % names.Length]);
             cmd.Parameters.AddWithValue("@guest", isGuest);
             cmd.Parameters.AddWithValue("@regTime", DateTime.Now);
+            cmd.Parameters.AddWithValue("@empty", "");
             int v = cmd.ExecuteNonQuery();
             bool ret = v > 0;
 
@@ -204,7 +205,7 @@ AND characters.charId=death.chrId;";
         public Account GetAccount(int id)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned FROM accounts WHERE id=@id;";
+            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE id=@id;";
             cmd.Parameters.AddWithValue("@id", id);
             Account ret;
             using (var rdr = cmd.ExecuteReader())
@@ -225,11 +226,11 @@ AND characters.charId=death.chrId;";
                         Id = rdr.GetInt32("guild"),
                         Rank = rdr.GetInt32("guildRank")
                     },
-                    Locked = getLockeds(id),
-                    Ignored = getIgnoreds(id),
                     NameChosen = rdr.GetBoolean("namechosen"),
                     NextCharSlotPrice = 0,
-                    VerifiedEmail = rdr.GetBoolean("verified")
+                    VerifiedEmail = rdr.GetBoolean("verified"),
+                    Locked = Utils.StringListToIntList(rdr.GetString("locked").Split(',').ToList()),
+                    Ignored = Utils.StringListToIntList(rdr.GetString("ignored").Split(',').ToList()),
                 };
             }
             ReadStats(ret);
@@ -239,7 +240,7 @@ AND characters.charId=death.chrId;";
         public Account GetAccount(string name)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned FROM accounts WHERE name=@name;";
+            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE name=@name;";
             cmd.Parameters.AddWithValue("@name", name);
             Account ret;
             using (var rdr = cmd.ExecuteReader())
@@ -259,11 +260,11 @@ AND characters.charId=death.chrId;";
                         Id = rdr.GetInt32("guild"),
                         Rank = rdr.GetInt32("guildRank")
                     },
-                    Locked = getLockeds(rdr.GetInt32("id")),
-                    Ignored = getIgnoreds(rdr.GetInt32("id")),
                     NameChosen = rdr.GetBoolean("namechosen"),
                     NextCharSlotPrice = 0,
-                    VerifiedEmail = rdr.GetBoolean("verified")
+                    VerifiedEmail = rdr.GetBoolean("verified"),
+                    Locked = Utils.StringListToIntList(rdr.GetString("locked").Split(',').ToList()),
+                    Ignored = Utils.StringListToIntList(rdr.GetString("ignored").Split(',').ToList()),
                 };
             }
             ReadStats(ret);

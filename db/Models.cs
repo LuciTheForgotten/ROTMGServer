@@ -83,9 +83,17 @@ public class Account
     [XmlIgnore]
     public bool VerifiedEmail { get { return this._VerifiedEmail != null; } set { this._VerifiedEmail = value ? "True" : null; } }
 
+    [XmlElement("StarredAccounts")]
+    public string _StarredAccounts { get; set; }
+    [XmlIgnore]
+    public List<int> Locked { get { return (this._StarredAccounts != null ? Utils.StringListToIntList(this._StarredAccounts.Split(',').ToList()) : new List<int>()); } set { this._StarredAccounts = string.Join(",", value); } }
+
+    [XmlElement("IgnoredAccounts")]
+    public string _IgnoredAccounts { get; set; }
+    [XmlIgnore]
+    public List<int> Ignored { get { return (this._IgnoredAccounts != null ? Utils.StringListToIntList(this._IgnoredAccounts.Split(',').ToList()) : new List<int>()); } set { this._IgnoredAccounts = string.Join(",", value); } }
+
     public int Rank;
-    public List<int> Locked { get; set; }
-    public List<int> Ignored { get; set; }
     public int Credits { get; set; }
     public int NextCharSlotPrice { get; set; }
     public int? BeginnerPackageTimeLeft { get; set; }
