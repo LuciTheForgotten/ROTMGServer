@@ -19,6 +19,7 @@ namespace wServer.realm
         bool interactive;
         public bool BagDropped;
         public Player PlayerOwner;
+        public bool isPet;
         public RealmManager Manager { get; private set; }
         protected Entity(short objType, bool interactive)
         {
@@ -28,6 +29,7 @@ namespace wServer.realm
             Size = 100;
             Usable = false;
             BagDropped = false;
+            isPet = false;
             XmlDatas.ObjectDescs.TryGetValue(objType, out desc);
             BehaviorDb.ResolveBehavior(this);
 

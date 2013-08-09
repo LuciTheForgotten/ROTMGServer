@@ -33,6 +33,7 @@ namespace wServer.realm
             Players = new ConcurrentDictionary<int, Player>();
             Enemies = new ConcurrentDictionary<int, Enemy>();
             Quests = new ConcurrentDictionary<int, Enemy>();
+            Pets = new ConcurrentDictionary<int, Entity>();
             Projectiles = new ConcurrentDictionary<Tuple<int, byte>, Projectile>();
             StaticObjects = new ConcurrentDictionary<int, StaticObject>();
             Timers = new List<WorldTimer>();
@@ -64,6 +65,7 @@ namespace wServer.realm
 
         public ConcurrentDictionary<int, Player> Players { get; private set; }
         public ConcurrentDictionary<int, Enemy> Enemies { get; private set; }
+        public ConcurrentDictionary<int, Entity> Pets { get; private set; }
         public ConcurrentDictionary<Tuple<int, byte>, Projectile> Projectiles { get; private set; }
         public ConcurrentDictionary<int, StaticObject> StaticObjects { get; private set; }
         public List<WorldTimer> Timers { get; private set; }
@@ -201,6 +203,11 @@ namespace wServer.realm
                 EnemiesCollision.Insert(entity);
                 if (entity.ObjectDesc.Quest)
                     Quests.TryAdd(entity.Id, entity as Enemy);
+
+                if(entity.isPet)
+                {
+                    Pets.TryAdd(entity.Id, entity);
+                }
             }
             else if (entity is Projectile)
             {
@@ -235,6 +242,11 @@ namespace wServer.realm
                 EnemiesCollision.Remove(entity);
                 if (entity.ObjectDesc.Quest)
                     Quests.TryRemove(entity.Id, out dummy);
+                if(entity.isPet)
+                {
+                    Entity dummy2;
+                    Pets.TryRemove(entity.Id, out dummy2);
+                }
             }
             else if (entity is Projectile)
             {

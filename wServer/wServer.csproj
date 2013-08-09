@@ -471,6 +471,7 @@
     <EmbeddedResource Include="realm\worlds\ghall1.wmap" />
     <EmbeddedResource Include="realm\worlds\ghall2.wmap" />
     <EmbeddedResource Include="realm\worlds\ghall3.wmap" />
+    <EmbeddedResource Include="realm\worlds\battlearena4.wmap" />
     <None Include="realm\worlds\vault.jm" />
     <None Include="realm\worlds\vaultnew.wmap" />
     <EmbeddedResource Include="realm\worlds\ZombieMap.wmap" />

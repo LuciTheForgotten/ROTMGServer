@@ -878,6 +878,7 @@ namespace wServer.realm.entities
             Pet = Entity.Resolve(petId);
             Pet.PlayerOwner = this;
             Pet.Move(X, Y);
+            Pet.isPet = true;
             Owner.EnterWorld(Pet);
         }
 
