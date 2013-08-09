@@ -855,12 +855,12 @@ namespace wServer.realm.entities
                                 }));
                         } break;
                     case ActivateEffects.PermaPet:
-                    case ActivateEffects.Pet:
                         {
                             psr.Character.Pet = XmlDatas.IdToType[eff.ObjectId];
                             GivePet(XmlDatas.IdToType[eff.ObjectId]);
                             UpdateCount++;
                         } break;
+                    case ActivateEffects.Pet: //Drakes
                     case ActivateEffects.UnlockPortal:
                         break;
                 }
