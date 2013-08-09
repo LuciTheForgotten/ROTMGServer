@@ -127,7 +127,10 @@ namespace wServer.logic.movement
                     {
                         Host.Self.Move(Host.Self.PlayerOwner.X, Host.Self.PlayerOwner.Y);
                     }
-                    return true;
+                    if (distance >= 1)
+                        return true;
+                    else
+                        return false;
                 }
             }
             var enemy = Host as Enemy;

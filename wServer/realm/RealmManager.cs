@@ -68,6 +68,7 @@ namespace wServer.realm
             AddWorld(GameWorld.AutoName(1, true));
 
             MerchantLists.GetKeys();
+            MerchantLists.AddPetShop();
             MerchantLists.AddCustomShops();
             foreach (var i in MerchantLists.shopLists)
             {

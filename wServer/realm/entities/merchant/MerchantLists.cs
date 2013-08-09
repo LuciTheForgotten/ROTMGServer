@@ -126,6 +126,20 @@ namespace wServer.realm.entities
             
         };
 
+        public static void AddPetShop()
+        {
+            List<int> PetShop = new List<int>();
+            for(var i = 0x1500; i < 0x1541; i++)
+            {
+                PetShop.Add((int)i);
+            }
+            shopLists.Add("pets", PetShop.ToArray());
+            PetShop.Shuffle();
+            shopLists.Add("pets2", PetShop.ToArray());
+            PetShop.Shuffle();
+            shopLists.Add("pets3", PetShop.ToArray());
+        }
+
         public static void GetKeys()
         {
             List<int> nkeys = new List<int>();
