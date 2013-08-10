@@ -1116,5 +1116,13 @@
     </RemoteTexture>
     <ScaleValue>3</ScaleValue>
   </Object>
-  
+  <Object type="0x195f" id="Mine Portal">
+    <Class>Portal</Class>
+    <IntergamePortal/>
+    <DungeonName>Mine</DungeonName>
+    <Texture>
+      <File>lofiEnvironment</File>
+      <Index>0x7c</Index>
+    </Texture>
+  </Object>
 </Remote>

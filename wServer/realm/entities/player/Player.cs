@@ -544,9 +544,11 @@ namespace wServer.realm.entities
                                 world = RealmManager.AddWorld(new Secret()); break;
                             case 0x1923:
                                 world = RealmManager.AddWorld(new ZombieMap()); break;
-                            default: SendError("Portal Not Implemented!"); break;
                             case 0x195d:
                                 world = RealmManager.AddWorld(new MarketMap()); break;
+                            case 0x195f:
+                                world = RealmManager.AddWorld(new Mine()); break;
+                            default: SendError("Portal Not Implemented!"); break;
                         }
                     }
                     if(setWorldInstance)

@@ -124,6 +124,7 @@
     <Compile Include="realm\terrain\Wmap.cs" />
     <Compile Include="realm\worlds\BeachZone.cs" />
     <Compile Include="realm\worlds\BattleArena.cs" />
+    <Compile Include="realm\worlds\Mine.cs" />
     <Compile Include="realm\worlds\MarketMap.cs" />
     <Compile Include="realm\worlds\Secret.cs" />
     <Compile Include="realm\worlds\SnakePit.cs" />
@@ -473,6 +474,7 @@
     <EmbeddedResource Include="realm\worlds\ghall2.wmap" />
     <EmbeddedResource Include="realm\worlds\ghall3.wmap" />
     <EmbeddedResource Include="realm\worlds\battlearena4.wmap" />
+    <EmbeddedResource Include="realm\worlds\mine.wmap" />
     <None Include="realm\worlds\vault.jm" />
     <None Include="realm\worlds\vaultnew.wmap" />
     <EmbeddedResource Include="realm\worlds\ZombieMap.wmap" />

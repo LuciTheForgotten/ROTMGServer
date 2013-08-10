@@ -14,7 +14,7 @@ namespace wServer.realm
             try
             {
                 Random rand = new Random();
-                if (rand.Next(1, 100) != 1)
+                if (rand.Next(1, 60) != 1)
                     return false;
                 //Console.Out.WriteLine("Generating room...");
                 List<string> dirs = new List<string>();
